@@ -1,1 +1,236 @@
-<h1>🎈Test</h1>
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>网站设计与开发</title>
+  <style>
+    :root{
+      --theme-text-color: rgb(0, 51, 155);
+      --theme-bg-color: #dfe2f1;
+    }
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    button{
+      background-color: var(--theme-text-color);
+      border: none;
+      font-size: 1rem;
+      width: 100%;
+      color: white;
+      padding: .5rem 0;
+      transition: .3s;
+    }
+    button:hover{
+      filter: opacity(80%);
+    }
+    button:active{
+      filter: grayscale(30%);
+    }
+    body{
+      background-color: var(--theme-bg-color);
+      padding: 2rem;
+    }
+    #poster{
+      width: 100%;
+      padding: 0 10%;
+      box-sizing: border-box;
+    }
+    .title, .text, .form-title{
+      color: var(--theme-text-color);
+    }
+    .title{
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .introduce{
+      margin-top: 1rem;
+      text-shadow: 1rem 1rem 2rem rgb(255, 83, 83);
+      font-weight: 600;
+      letter-spacing: .3rem;
+    }
+    .form{
+      background-color: white;
+      margin: 2rem 0;
+      padding: 1rem;
+      border-radius: 2%;
+      box-shadow: 1px 1px 5px rgb(138, 138, 138);
+    }
+    .form-title{
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .form-opetions{
+      display: flex;
+      margin: 8px 0;
+      color: rgb(80, 80, 80);
+    }
+    .form-opetions > input{
+      margin-right: 1rem;
+    }
+    .tips{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(80, 80, 80, .3);
+    }
+    .tips-content{
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      padding: 2rem;
+      box-sizing: border-box;
+      transform:translate(-50%,-50%);
+      border-radius: .5rem;
+      background-color: white;
+      box-shadow: .1rem .1rem .1rem rgb(134, 134, 134);
+    }
+    .tips-text{
+      margin: 1rem 0;
+      white-space:nowrap;
+    }
+  </style>
+</head>
+  <body style="position: relative;">
+    <header>
+      <img id="poster" src="https://img1.imgtp.com/2023/07/03/PF4mDlIb.png" alt="not image">
+      <p class="title">网站设计与开发</p>
+      <div class="introduce">
+        <p class="text">我们正在寻找富有才华、积极进取的学生，如果你有对web开发充满激情和热爱，欢迎加入我们的竞赛团队，与优秀的团队一起蜕变成长、创建未来！</p>
+        <br>
+        <p class="text">竞赛共5道题，都是单选题，每题20分，总分100分。每人都有答题机会，希望大家都能得到满分。</p>
+      </div>
+    </header>
+    <main></main>
+    <footer>
+      <button onclick="submit()">提交</button>
+    </footer>
+    <div class="tips" style="display: none;">
+      <div class="tips-content">
+        <div class="tips-title">你的成绩是： </div>
+        <div class="tips-text">0分? 🤷‍♂️一定是哪里出了问题</div>
+        <button onclick="location.href = ''">再来一次</button>
+      </div>
+    </div>
+  </body>
+  <script>
+      const topics = [
+        {
+          topic: 'HTML指的是?',
+          options: ['超文本标记语言（Hyper Text Markup Language）', '家庭工具标记语言（Home Tool Markup Language）', '超链接和文本标记语言（Hyperlinks and Text Markup Language）', '轻量级标记语言（Mark down）'],
+          answer: 0,
+        },
+        {
+          topic: '哪个 CSS 属性可控制文本的尺寸?',
+          options: ['font-size', 'text-style', 'font-style', 'text-size'],
+          answer: 0,
+        },
+        {
+          topic: 'JS如何在控制台打印 "Hello World"?',
+          options: ['print("Hello World");', 'console.log("Hello World");', 'echo "Hello World";', 'text-var_dump("Hello World");'],
+          answer: 1,
+        },
+        {
+          topic: '在 PHP 中，所有的变量以哪个符号开头?',
+          options: ['!', '#', '$', '&'],
+          answer: 2,
+        },
+        {
+          topic: '哪条 SQL 语句用于删除数据库中的数据?',
+          options: ['COLLAPSE', 'DELETE', 'REMOVE', 'UPDATE'],
+          answer: 1,
+        },
+        {
+          topic: 'Web 标准的制定者是?',
+          options: ['微软 (Microsoft)', '万维网公司 (W3C)', '网景公司 (Netscape)', '谷歌公司 (Google)'],
+          answer: 1,
+        },
+        {
+          topic: '在下列的 HTML 中，哪个是最大的标题?',
+          options: ['< h6 >', '< head >', '< heading >', '< h1 >'],
+          answer: 3,
+        },
+        {
+          topic: '在 HTML 中，图像哪个标签来标记?',
+          options: ['< picture >', '< img >', '< pic >', '< image >'],
+          answer: 1,
+        },
+        {
+          topic: '下面哪一项是换行符标记?',
+          options: ['< body >', '< font >', '< br >', '< p >'],
+          answer: 2,
+        },
+      ]
+      
+
+      function tips(score) {
+        let text = ""
+        switch (score) {
+          case 0:
+            text = '0分? 🤷‍♂️一定是哪里出了问题'
+            break;
+          case 20:
+            text = '20分, 🤦‍♂️你在逗我吗?'
+            break;
+          case 40:
+            text = '40分, 😅差一点了，再来一次吧!'
+            break;  
+          case 60:
+            text = '60分, 👏恭喜你通过本次竞赛！继续努力学习，取得更好的成绩吧!'
+            break;  
+          case 80:
+            text = '80分, 🎊非常棒！你已经超过了及格线，继续保持这种优秀的表现!'
+            break;  
+          case 100:
+            text = '100分, 🎉太棒了！你完美通过了本次考验！'
+            break;  
+        }
+        document.querySelector('.tips').style.display = "block"
+        document.querySelector('.tips-text').innerHTML = text
+        
+      }
+
+      function submit() {
+        let score = 0
+        document.querySelectorAll('input').forEach((item, index) => {
+          if (item.checked) {
+            if (parseInt(item.value) === filterTopics[Math.floor(index/4)].answer) {
+              score += 20
+            }
+          }
+        })
+        tips(score)
+      }
+
+      const filterTopics = []
+      for (let i = 0; i < 5; i++) {
+        let index = Math.floor(Math.random()*topics.length)
+        filterTopics.push(topics[index])
+        topics.splice(index, 1);
+      }
+
+      filterTopics.forEach((item, index) => {
+        const mainDom = document.querySelector('main')
+        mainDom.innerHTML += `
+          <div class="form">
+            <div class="form-title">${index+1}. ${item.topic}</div>
+              <div class="form-content"></div>
+          </div>
+          `
+          item.options.forEach((option, value) => {
+            const formContentDom = document.querySelectorAll('.form-content')
+            formContentDom[formContentDom.length-1].innerHTML += `
+                <label class="form-opetions">
+                    <input type="radio" value="${value}" name="topic${index}">
+                    <p class="topic">${option}</p>
+                </label>
+              `
+          })
+      })
+  </script>
+</html>
